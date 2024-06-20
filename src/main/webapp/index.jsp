@@ -5,7 +5,7 @@
     <title>Welcome DevOps</title>
     <style>
         body {
-            background: white(to right, #ff8a00, #da1b60);
+            background: linear-gradient(to right, #ff8a00, #da1b60);
             color: indigo;
             font-family: Arial, sans-serif;
             text-align: center;
