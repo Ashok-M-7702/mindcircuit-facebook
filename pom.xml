@@ -28,12 +28,12 @@
         <distributionManagement>
 		 <snapshotRepository>
 		    <id>NexusRepo</id>
-		    <url>http://3.236.189.210:8081/repository/ashok13-repository-snapshots/</url>
+		    <url>http://3.236.189.210:8081/repository/ashok13-snapshots/</url>
 		 </snapshotRepository>
 		
 		<repository>
 		    <id>NexusRepo</id>
-		    <url>http://3.236.189.210:8081/repository/ashok13-repository/</url>
+		    <url>http://3.236.189.210:8081/repository/ashok13-release/</url>
 		</repository>
   	</distributionManagement>
 	
