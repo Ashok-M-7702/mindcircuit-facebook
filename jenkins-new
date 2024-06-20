@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+	tools{
+	  jdk 'java8'
+	}
+
+    stages {
+        stage('git') {
+            steps {
+                echo 'cloning from git'
+				git branch: 'main', url: 
+				'https://github.com/Ashok-M-7702/mindcircuit-facebook.git'
+            }
+        }
+		
+		stage('sonar') {
+            steps {
+                echo 'sonar scan'
+				sh '''mvn sonar:sonar \\
+  -Dsonar.host.url=http://3.237.63.45:9000 \\
+  -Dsonar.login=07d37d48f83421ace12500d78b96401816818690'''
+            }
+        }
+		
+		stage('build artifact') {
+            steps {
+                echo 'maven build'
+				sh 'mvn clean install'
+            }
+        }
+		
+		stage('generate nexus artifact') {
+            steps {
+                echo 'upload to nexus'
+				sh 'mvn deploy'
+            }
+        }
+		
+		stage('web-server') {
+            steps {
+                echo 'deploy to tomcat'
+				deploy adapters: [tomcat9(credentialsId: 'db81facd-a584-4bd5-970f-49fd38085e8b', path: '', url: 
+				'http://54.173.100.20:8081/')], contextPath: 'chary_app', war: '**/*.war'
+            }
+        }
+    }
+}
