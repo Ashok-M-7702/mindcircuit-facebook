@@ -1,17 +1,13 @@
-#multistage Dockerfile
-
-#BUILD STAGE1
-
-FROM maven as buildstage
-RUN mkdir /opt/mindcircuit13
-WORKDIR /opt/mindcircuit13
+FROM maven AS buildstage
+RUN mkdir /opt/mc
+WORKDIR /opt/mc
 COPY . .
-RUN mvn clean install  #Generate artifact in this stage-- .war
+RUN mvn clean install #this will generate .war in target directory 
 
-#BUILD STAGE2
-
-FROM tomcat
+#new stage 
+FROM tomcat 
 WORKDIR webapps
-COPY --from=buildstage /opt/mindcircuit13/target/*.war .
+# Copying only .war artifact from target dir -old state to this stage  
+COPY --from=buildstage /opt/mc/target/*.war .
 RUN rm -rf ROOT && mv *.war ROOT.war
 EXPOSE 8080
